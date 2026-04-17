@@ -2,22 +2,25 @@
   --color-accent: oklch(65% 50% 0);
 }
 
+/* enable automatic dark/light mode */
+html {
+  color-scheme: light dark;
+}
+
 body {
-  /* Set line height to 1.5 times the font size
-	   and use the OS’s UI font as the website font
-	 */
   font: 100%/1.5 system-ui;
   max-width: 100ch;
   margin-inline: auto;
   padding: 1em;
   accent-color: var(--color-accent);
-
 }
 
+/* NAV */
 nav {
+  --border-color: oklch(50% 10% 200 / 40%);
   display: flex;
   margin-bottom: 1em;
-  border-bottom: 1px solid oklch(80% 3% 200);
+  border-bottom: 1px solid var(--border-color);
 }
 
 nav a {
@@ -29,14 +32,16 @@ nav a {
 }
 
 nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200);
+  border-bottom: 0.4em solid var(--border-color);
   padding-bottom: 0.1em;
 }
 
 nav a:hover {
   border-bottom: 0.4em solid var(--color-accent);
+  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
 }
 
+/* FORM */
 form {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -55,15 +60,12 @@ form button {
 
 input,
 textarea,
-button {
+button,
+select {
   font: inherit;
 }
 
-.projects {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-}
-
+/* PROJECTS GRID */
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
@@ -80,6 +82,7 @@ button {
   margin: 0;
 }
 
+/* TYPOGRAPHY */
 h1 {
   font-size: 400%;
 }
@@ -89,6 +92,7 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
+/* SECTIONS */
 section {
   margin-block: 2em;
 }
@@ -118,10 +122,23 @@ time {
   font-size: 0.95em;
 }
 
+/* LISTS */
 ul {
   padding-left: 1.2em;
 }
 
 li {
   margin-block: 0.4em;
+}
+
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+}
+
+select {
+  font: inherit;
 }
