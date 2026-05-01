@@ -13,13 +13,18 @@ let colors = d3.scaleOrdinal(d3.schemeTableau10);
 let query = '';
 let selectedYear = null;
 
-function filterProjects() {
+function getSearchFilteredProjects() {
   return projects.filter((project) => {
     let values = Object.values(project).join('\n').toLowerCase();
-    let matchesSearch = values.includes(query.toLowerCase());
-    let matchesYear = selectedYear === null || project.year === selectedYear;
+    return values.includes(query.toLowerCase());
+  });
+}
 
-    return matchesSearch && matchesYear;
+function getFinalFilteredProjects() {
+  let searchFilteredProjects = getSearchFilteredProjects();
+
+  return searchFilteredProjects.filter((project) => {
+    return selectedYear === null || project.year === selectedYear;
   });
 }
 
@@ -55,10 +60,10 @@ function renderPieChart(projectsGiven) {
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
 
-        let filteredProjects = filterProjects();
+        let finalFilteredProjects = getFinalFilteredProjects();
 
-        renderProjects(filteredProjects, projectsContainer, 'h2');
-        renderPieChart(filteredProjects);
+        renderProjects(finalFilteredProjects, projectsContainer, 'h2');
+        renderPieChart(getSearchFilteredProjects());
       });
   });
 
@@ -79,8 +84,8 @@ let searchInput = document.querySelector('.searchBar');
 searchInput.addEventListener('change', (event) => {
   query = event.target.value;
 
-  let filteredProjects = filterProjects();
+  let finalFilteredProjects = getFinalFilteredProjects();
 
-  renderProjects(filteredProjects, projectsContainer, 'h2');
-  renderPieChart(filteredProjects);
+  renderProjects(finalFilteredProjects, projectsContainer, 'h2');
+  renderPieChart(getSearchFilteredProjects());
 });
