@@ -10,13 +10,10 @@ const projectsContainer = document.querySelector('.projects');
 
 let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
-let selectedIndex = -1;
 let query = '';
-let currentData = [];
+let selectedYear = null;
 
 function filterProjects() {
-  let selectedYear = selectedIndex === -1 ? null : currentData[selectedIndex]?.label;
-
   return projects.filter((project) => {
     let values = Object.values(project).join('\n').toLowerCase();
     let matchesSearch = values.includes(query.toLowerCase());
@@ -33,12 +30,12 @@ function renderPieChart(projectsGiven) {
     (d) => d.year
   );
 
-  currentData = rolledData.map(([year, count]) => {
+  let data = rolledData.map(([year, count]) => {
     return { value: count, label: year };
   });
 
   let sliceGenerator = d3.pie().value((d) => d.value);
-  let arcData = sliceGenerator(currentData);
+  let arcData = sliceGenerator(data);
   let arcs = arcData.map((d) => arcGenerator(d));
 
   let svg = d3.select('#projects-pie-plot');
@@ -48,33 +45,28 @@ function renderPieChart(projectsGiven) {
   legend.selectAll('li').remove();
 
   arcs.forEach((arc, i) => {
+    let year = data[i].label;
+
     svg
       .append('path')
       .attr('d', arc)
       .attr('fill', colors(i))
-      .attr('class', selectedIndex === i ? 'selected' : '')
+      .attr('class', selectedYear === year ? 'selected' : '')
       .on('click', () => {
-        selectedIndex = selectedIndex === i ? -1 : i;
+        selectedYear = selectedYear === year ? null : year;
 
         let filteredProjects = filterProjects();
 
         renderProjects(filteredProjects, projectsContainer, 'h2');
-
-        svg
-          .selectAll('path')
-          .attr('class', (_, idx) => selectedIndex === idx ? 'selected' : '');
-
-        legend
-          .selectAll('li')
-          .attr('class', (_, idx) => selectedIndex === idx ? 'selected' : '');
+        renderPieChart(filteredProjects);
       });
   });
 
-  currentData.forEach((d, idx) => {
+  data.forEach((d, idx) => {
     legend
       .append('li')
       .attr('style', `--color:${colors(idx)}`)
-      .attr('class', selectedIndex === idx ? 'selected' : '')
+      .attr('class', selectedYear === d.label ? 'selected' : '')
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
   });
 }
@@ -86,7 +78,6 @@ let searchInput = document.querySelector('.searchBar');
 
 searchInput.addEventListener('change', (event) => {
   query = event.target.value;
-  selectedIndex = -1;
 
   let filteredProjects = filterProjects();
 
