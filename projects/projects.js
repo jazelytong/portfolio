@@ -77,3 +77,4 @@ searchInput.addEventListener('change', (event) => {
   renderProjects(getFilteredProjects(), projectsContainer, 'h2');
   renderPieChart();
 });
+
