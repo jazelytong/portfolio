@@ -10,27 +10,21 @@ const projectsContainer = document.querySelector('.projects');
 
 let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
-let query = '';
 let selectedYear = null;
+let query = '';
 
-function getSearchFilteredProjects() {
+function getFilteredProjects() {
   return projects.filter((project) => {
     let values = Object.values(project).join('\n').toLowerCase();
-    return values.includes(query.toLowerCase());
+    let matchesSearch = values.includes(query.toLowerCase());
+    let matchesYear = selectedYear === null || project.year === selectedYear;
+    return matchesSearch && matchesYear;
   });
 }
 
-function getFinalFilteredProjects() {
-  let searchFilteredProjects = getSearchFilteredProjects();
-
-  return searchFilteredProjects.filter((project) => {
-    return selectedYear === null || project.year === selectedYear;
-  });
-}
-
-function renderPieChart(projectsGiven) {
+function renderPieChart() {
   let rolledData = d3.rollups(
-    projectsGiven,
+    projects,
     (v) => v.length,
     (d) => d.year
   );
@@ -59,11 +53,8 @@ function renderPieChart(projectsGiven) {
       .attr('class', selectedYear === year ? 'selected' : '')
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
-
-        let finalFilteredProjects = getFinalFilteredProjects();
-
-        renderProjects(finalFilteredProjects, projectsContainer, 'h2');
-        renderPieChart(getSearchFilteredProjects());
+        renderProjects(getFilteredProjects(), projectsContainer, 'h2');
+        renderPieChart();
       });
   });
 
@@ -76,16 +67,13 @@ function renderPieChart(projectsGiven) {
   });
 }
 
-renderProjects(projects, projectsContainer, 'h2');
-renderPieChart(projects);
+renderProjects(getFilteredProjects(), projectsContainer, 'h2');
+renderPieChart();
 
 let searchInput = document.querySelector('.searchBar');
 
 searchInput.addEventListener('change', (event) => {
   query = event.target.value;
-
-  let finalFilteredProjects = getFinalFilteredProjects();
-
-  renderProjects(finalFilteredProjects, projectsContainer, 'h2');
-  renderPieChart(getSearchFilteredProjects());
+  renderProjects(getFilteredProjects(), projectsContainer, 'h2');
+  renderPieChart();
 });
