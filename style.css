@@ -275,23 +275,3 @@ circle.selected {
 .gridlines path {
   display: none;
 }
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
-  gap: 1em;
-  margin-block: 1em;
-}
-
-.stats dt {
-  grid-row: 1;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  color: oklch(50% 10% 200);
-}
-
-.stats dd {
-  grid-row: 2;
-  margin: 0;
-  font-size: 2em;
-}
