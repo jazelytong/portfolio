@@ -16,8 +16,9 @@
   {
     "title": "Recipe Virality Analysis",
     "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A data science project exploring how recipes gain popularity using data analysis and visualization techniques."
+    "image": "images/recipe.jpg",
+    "description": "A data science project exploring how recipes gain popularity using data analysis and visualization techniques.",
+    "url": "https://jazelytong.github.io/recipe-virality-analysis/"
   },
   {
     "title": "COVIDchats Website",
