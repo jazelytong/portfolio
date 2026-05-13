@@ -1,5 +1,19 @@
 [
   {
+    "title": "LA Climate Change Visualization",
+    "year": "2026",
+    "image": "images/climate-change.png",
+    "description": "An interactive D3 visualization exploring projected temperature change in Los Angeles under different climate emissions scenarios using CMIP6 climate model data.",
+    "url": "https://jazelytong.github.io/dsc106-project3/"
+  },
+  {
+    "title": "Bikewatching",
+    "year": "2026",
+    "image": "images/bikewatching.png",
+    "description": "An interactive Mapbox and D3 visualization of BlueBike traffic in the Boston area.",
+    "url": "https://jazelytong.github.io/bikewatching/"
+  },
+  {
     "title": "Recipe Virality Analysis",
     "year": "2026",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
