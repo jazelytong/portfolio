@@ -118,7 +118,7 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
 
     article.innerHTML = `
   <${headingLevel}>${project.title}</${headingLevel}>
-  <img src="${location.pathname.includes('/projects/') ? '../' + project.image : project.image}" alt="${project.title}">
+  <img src="${BASE_PATH + project.image}" alt="${project.title}">
   <div>
     <p>${project.description}</p>
     <p class="year">${project.year}</p>
