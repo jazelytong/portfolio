@@ -4,20 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meta</title>
+
   <link rel="stylesheet" href="../style.css" />
+
   <script type="module" src="../global.js"></script>
   <script type="module" src="main.js"></script>
 </head>
+
 <body>
   <h1>Meta</h1>
+
   <p>This page includes stats about the code of this website.</p>
+
+  <div class="slider-row">
+    <label for="commit-progress">Show commits until:</label>
+
+    <input
+      type="range"
+      id="commit-progress"
+      min="0"
+      max="100"
+      value="100"
+    />
+
+    <time id="commit-time"></time>
+  </div>
 
   <div id="stats"></div>
 
-  <h2>Commits by time of day</h2>
-  <div id="chart"></div>
-  <p id="selection-count">No commits selected</p>
-  <dl id="language-breakdown" class="stats"></dl>
+  <div id="scrolly-1">
+    <div id="scatter-story"></div>
+
+    <div id="scatter-plot">
+      <h2>Commits by time of day</h2>
+
+      <div id="chart"></div>
+
+      <p id="selection-count">No commits selected</p>
+
+      <dl id="language-breakdown" class="stats"></dl>
+    </div>
+  </div>
+
+  <dl id="files"></dl>
 
   <dl id="commit-tooltip" class="info tooltip" hidden>
     <dt>Commit</dt>
@@ -27,7 +56,7 @@
     <dd id="commit-date"></dd>
 
     <dt>Time</dt>
-    <dd id="commit-time"></dd>
+    <dd id="tooltip-commit-time"></dd>
 
     <dt>Author</dt>
     <dd id="commit-author"></dd>
